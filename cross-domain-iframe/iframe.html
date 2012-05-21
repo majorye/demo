@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+	  .content{
+	    width:300px;
+		height:1000px;
+		background-color:green;
+	  }
+	  html body{
+	  background-color:transparent;
+	  padding:0px;
+	  margin:0px;
+	  overflow:hidden;
+	  }
+    </style>
+
+</head>
+<body>
+<div class="content">
+
+</div>
+<script type="text/javascript">
+(function () {
+var getHeight = function () {
+        return Math.min(document.documentElement.scrollHeight, document.body.scrollHeight);
+    };
+
+var preHeight = getHeight(),
+    agent_iframe;
+
+var createIframe = function (height) {
+        agent_iframe = document.createElement("iframe");
+        agent_iframe.style.height = "0";
+        agent_iframe.style.width = "0";
+        agent_iframe.style.border = "none";
+        agent_iframe.src = "http://test.com/demo/cross-domain-iframe/tunnel.html#" + height;
+        document.body.appendChild(agent_iframe);
+    }
+
+createIframe(preHeight);
+
+var checkHeight = function () {
+        var currentHeight = getHeight();
+        if (currentHeight != preHeight) {
+            agent_iframe.src = "http://test.com/demo/cross-domain-iframe/tunnel.html#" + currentHeight;
+            preHeight = currentHeight;
+        }
+        setTimeout(checkHeight, 500);
+    }
+
+setTimeout(checkHeight, 500);
+})();
+</script>
+</body>
+</html>
